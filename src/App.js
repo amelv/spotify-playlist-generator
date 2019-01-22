@@ -10,7 +10,7 @@ import 'rc-slider/assets/index.css';
 const spotifyWebApi = new Spotify();
 const SliderWithTooltip = createSliderWithTooltip(Slider);
 
-const style = { width: 600, margin: 50 };
+const slider_style = { width: 300, margin: 25 };
 
 class App extends Component {
   constructor(){
@@ -42,24 +42,65 @@ class App extends Component {
     e.preventDefault();
     const song = e.target.elements.song.value;
 	  console.log("getting recs...");
-    const res = await spotifyWebApi.getRecommendations({ seed_tracks: [song] });
+    const rec_res = await spotifyWebApi.getRecommendations({ seed_tracks: [song] });
     this.setState({
-      recs: res.tracks
+      recs: rec_res.tracks
     });
+    console.log(this.state.recs[0].id);
+
+/*    const create_res = await spotifyWebApi.createPlaylist({
+      "name": "New Playlist",
+      "description": "New playlist description",
+      "public": false
+    } */
     //we could then have the user chose to keep or remove the song from the playlist
     //also the sliders for each track
   }
   
   
-  onSliderChange = (value) => {
+  onAcChange = (value) => {
+    this.setState({
+      inputs: {
+        acousticness: value
+      }
+    });  
+  }
+
+  onDanceChange = (value) => {
+    this.setState({
+      inputs: {
+        danceability: value
+      }
+    });  
+  }
+
+  onEnChange = (value) => {
+    this.setState({
+      inputs: {
+        energy: value
+      }
+    });  
+  }
+
+  onPopChange = (value) => {
+    this.setState({
+      inputs: {
+        popularity: value
+      }
+    });  
+  }
+
+  onValChange = (value) => {
     this.setState({
       inputs: {
         valence: value
       }
     });  
-    console.log(value);
   }
 
+  getPlayURL() {
+    return "https://open.spotify.com/embed/track/" + this.state.recs[0].id;
+  }
   
   getHashParams() {
     var hashParams = {};
@@ -83,26 +124,46 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="App">
+      <div className="wrapper">
         <a href = 'http://localhost:8888'>
           <button>Log in With Spotify</button>
         </a>
         <div> Now Playing: { this.state.nowPlaying.name}</div> 
         <div>
-          <img src= {this.state.nowPlaying.image } style = {{ width: 100}}/>
+          <img src= {this.state.nowPlaying.image } style = {{ width: 50}}/>
         </div>
         <button onClick= {()=> this.getNowPlaying()}>
           Check Now Playing
         </button>
-        <div>
+        <div style={slider_style}>
+          <p>Acousticness</p>
+          <Slider step={0.1} defaultValue={0.5} min={0.0} max={1.0} dots = {true}
+            onChange = {this.onAcChange} />
+        </div>
+        <div style={slider_style}>
+          <p>Danceability</p>
+          <Slider step={0.1} defaultValue={0.5} min={0.0} max={1.0} dots = {true}
+            onChange = {this.onDanceChange} />
+        </div>
+        <div style={slider_style}>
+          <p>Energy</p>
+          <Slider step={0.1} defaultValue={0.5} min={0.0} max={1.0} dots = {true}
+            onChange = {this.onEnChange} />
+        </div>
+        <div style={slider_style}>
+          <p>Popularity</p>
+          <Slider step={0.1} defaultValue={0.5} min={0.0} max={1.0} dots = {true}
+            onChange = {this.onPopChange} />
+        </div>
+        <div style={slider_style}>
           <p>Valence</p>
-          <Slider step={0.1} defaultValue={0.5} min={0.0} max={1.0}
-            onChange = {this.onSliderChange} />
+          <Slider step={0.1} defaultValue={0.5} min={0.0} max={1.0} dots = {true}
+            onChange = {this.onValChange} />
         </div>
 	      <Form getRec={this.getRec}/>
-	      <div> Recommended Song: { this.state.recs[0] && this.state.recs[0].name } </div>
-	      <div> Link : { this.state.recs[0] && this.state.recs[0].external_urls.spotify } 
-          </div>
+        <div>
+          <iframe src= { this.state.recs[0] && this.getPlayURL() } width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        </div>
       </div>
     );
   }

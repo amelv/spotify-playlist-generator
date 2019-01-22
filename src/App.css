@@ -1,36 +1,17 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css?family=Merriweather:100,200,300,300i,400,400i    ,700');                                                                                    
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
+
+body {
+  font-family: "Open Sans", serif;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.wrapper {
+  height: 100vh;
   display: flex;
+  padding-top: 250px;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-div,button{
-  margin: 15px;
-}

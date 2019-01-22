@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+(IN PROGRESS) This React web app will provide you a song based on your preference input through the Spotify web API.
 
 ## Available Scripts
 

@@ -6,11 +6,27 @@ import Spotify from 'spotify-web-api-js';
 
 import Slider, { createSliderWithTooltip } from 'rc-slider';
 import 'rc-slider/assets/index.css';
-
+//import Slider from '@material-ui/lab/Slider';
+//import { withStyles } from '@material-ui/core/styles';
 const spotifyWebApi = new Spotify();
+
 const SliderWithTooltip = createSliderWithTooltip(Slider);
 
 const slider_style = { width: 300, margin: 25 };
+const handle_style = {
+    borderColor: 'black',
+    height: 15,
+    width: 15,
+    marginLeft: -4  ,
+    marginTop: -5.75,
+    backgroundColor: '#fc9583'
+}
+const mintrack_style = {
+  backgroundColor: '#fcfcfc', height: 2
+}
+const maxtrack_style = {
+  backgroundColor: '#020000', height: 2
+}
 
 class App extends Component {
   constructor(){
@@ -56,14 +72,14 @@ class App extends Component {
     //we could then have the user chose to keep or remove the song from the playlist
     //also the sliders for each track
   }
-  
-  
+
+
   onAcChange = (value) => {
     this.setState({
       inputs: {
         acousticness: value
       }
-    });  
+    });
   }
 
   onDanceChange = (value) => {
@@ -71,7 +87,7 @@ class App extends Component {
       inputs: {
         danceability: value
       }
-    });  
+    });
   }
 
   onEnChange = (value) => {
@@ -79,7 +95,7 @@ class App extends Component {
       inputs: {
         energy: value
       }
-    });  
+    });
   }
 
   onPopChange = (value) => {
@@ -87,7 +103,7 @@ class App extends Component {
       inputs: {
         popularity: value
       }
-    });  
+    });
   }
 
   onValChange = (value) => {
@@ -95,13 +111,13 @@ class App extends Component {
       inputs: {
         valence: value
       }
-    });  
+    });
   }
 
   getPlayURL() {
     return "https://open.spotify.com/embed/track/" + this.state.recs[0].id;
   }
-  
+
   getHashParams() {
     var hashParams = {};
     var e, r = /([^&;=]+)=?([^&;]*)/g,
@@ -128,7 +144,7 @@ class App extends Component {
         <a href = 'http://localhost:8888'>
           <button>Log in With Spotify</button>
         </a>
-        <div> Now Playing: { this.state.nowPlaying.name}</div> 
+        <div> Now Playing: { this.state.nowPlaying.name}</div>
         <div>
           <img src= {this.state.nowPlaying.image } style = {{ width: 50}}/>
         </div>
@@ -137,28 +153,43 @@ class App extends Component {
         </button>
         <div style={slider_style}>
           <p>Acousticness</p>
-          <Slider step={0.1} defaultValue={0.5} min={0.0} max={1.0} dots = {true}
+          <Slider step={0.01} min={0.0} max={1.0}
+          maximumTrackStyle={maxtrack_style}
+      minimumTrackStyle={mintrack_style}
+      handleStyle={handle_style}
             onChange = {this.onAcChange} />
         </div>
         <div style={slider_style}>
           <p>Danceability</p>
-          <Slider step={0.1} defaultValue={0.5} min={0.0} max={1.0} dots = {true}
-            onChange = {this.onDanceChange} />
+          <Slider step={0.01} min={0.0} max={1.0}
+          maximumTrackStyle={maxtrack_style}
+      minimumTrackStyle={mintrack_style}
+      handleStyle={handle_style}
+            onChange = {this.onAcChange} />
         </div>
         <div style={slider_style}>
           <p>Energy</p>
-          <Slider step={0.1} defaultValue={0.5} min={0.0} max={1.0} dots = {true}
-            onChange = {this.onEnChange} />
+          <Slider step={0.01} min={0.0} max={1.0}
+          maximumTrackStyle={maxtrack_style}
+      minimumTrackStyle={mintrack_style}
+      handleStyle={handle_style}
+            onChange = {this.onAcChange} />
         </div>
         <div style={slider_style}>
           <p>Popularity</p>
-          <Slider step={0.1} defaultValue={0.5} min={0.0} max={1.0} dots = {true}
-            onChange = {this.onPopChange} />
+          <Slider step={0.01} min={0.0} max={1.0}
+          maximumTrackStyle={maxtrack_style}
+      minimumTrackStyle={mintrack_style}
+      handleStyle={handle_style}
+            onChange = {this.onAcChange} />
         </div>
         <div style={slider_style}>
           <p>Valence</p>
-          <Slider step={0.1} defaultValue={0.5} min={0.0} max={1.0} dots = {true}
-            onChange = {this.onValChange} />
+          <Slider step={0.01} min={0.0} max={1.0}
+          maximumTrackStyle={maxtrack_style}
+      minimumTrackStyle={mintrack_style}
+      handleStyle={handle_style}
+            onChange = {this.onAcChange}/ >
         </div>
 	      <Form getRec={this.getRec}/>
         <div>
